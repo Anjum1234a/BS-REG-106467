@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Color Changer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            transition: background-color 0.5s ease;
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .color-box {
+            background-color: pink;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        #colorBtn {
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        #colorBtn:hover {
+            background-color: #3a5a8f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        #colorBtn:active {
+            transform: translateY(0);
+        }
+        
+        #colorValue {
+            font-family: monospace;
+            font-size: 24px;
+            margin-top: 20px;
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="color-box">
+        <h1>Random Background Color Changer</h1>
+        <button id="colorBtn">Change Color</button>
+        <div id="colorValue">#FFFFFF</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const colorBtn = document.getElementById('colorBtn');
+            const colorValue = document.getElementById('colorValue');
+            
+            // Function to generate random hex color
+            function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+            
+            function isLightColor(color) {
+                // Convert hex to RGB
+                const r = parseInt(color.substr(1, 2), 16);
+                const g = parseInt(color.substr(3, 2), 16);
+                const b = parseInt(color.substr(5, 2), 16);
+                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                return luminance > 0.5;
+            }
+            
+            colorBtn.addEventListener('click', function() {
+                const randomColor = getRandomColor();
+              
+                document.body.style.backgroundColor = randomColor;
+                
+              
+                colorValue.textContent = randomColor;
+                if (isLightColor(randomColor)) {
+                    document.querySelector('h1').style.color = '#333';
+                    colorValue.style.color = '#333';
+                } else {
+                    document.querySelector('h1').style.color = 'Black';
+                    colorValue.style.color = 'Black';
+                }
+            });
+            
+            
+        });
+    </script>
+</body>
+</html>
